@@ -6,3 +6,4 @@ datasources:
     # Access mode - proxy (server in the UI) or direct (browser in the UI).
     access: proxy
     url: http://prometheus:9090
+    scrapeInterval: 10s
