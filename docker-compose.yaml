@@ -4,6 +4,10 @@ networks:
   front-tier:
   back-tier:
 
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+
 services:
 
   zertoexporter:
@@ -27,7 +31,7 @@ services:
     image: prom/prometheus:v2.40.6
     volumes:
       - ./prometheus/:/etc/prometheus/
-      - ./prometheus/prometheus_data:/prometheus
+      - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -49,7 +53,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./grafana/grafana_data:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=zertodata
