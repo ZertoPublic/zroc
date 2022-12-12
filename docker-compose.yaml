@@ -1,0 +1,60 @@
+version: '3.7'
+
+networks:
+  front-tier:
+  back-tier:
+
+services:
+
+  zertoexporter:
+    image: recklessop/ea-exporter:latest
+    command: python python-node-exporter.py
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./zvmexporter/:/usr/src/logs/
+    environment:
+      - VERIFY_SSL=False
+      - ZVM_HOST=192.168.50.60
+      - ZVM_PORT=443
+      - CLIENT_ID=api-script
+      - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j
+    networks:
+      - back-tier
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:v2.40.6
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - ./prometheus/prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    networks:
+      - back-tier
+    restart: always
+    depends_on:
+      - zertoexporter
+
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=zertodata
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - back-tier
+      - front-tier
+    restart: always
