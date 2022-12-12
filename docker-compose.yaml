@@ -54,6 +54,10 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=zertodata
       - GF_USERS_ALLOW_SIGN_UP=false
+      - data-source-url=http://prometheus:9090
+      - name=Prometheus
+      - type=prometheus
+      - update-interval=10
     networks:
       - back-tier
       - front-tier
