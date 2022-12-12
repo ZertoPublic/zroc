@@ -23,6 +23,7 @@ services:
       - ZVM_PORT=443
       - CLIENT_ID=api-script
       - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j
+      - LOGGING_LEVEL=INFO
     networks:
       - back-tier
     restart: always
