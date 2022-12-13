@@ -117,7 +117,7 @@
           "refId": "A"
         }
       ],
-      "title": "All VMs - % of Writes Encrypted",
+      "title": "% of Writes Encrypted",
       "type": "timeseries"
     },
     {
@@ -624,6 +624,6 @@
   "timezone": "",
   "title": "Encryption Analyzer Dashboard",
   "uid": "DqUCTVcVz",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
