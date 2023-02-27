@@ -21,6 +21,7 @@ services:
       - VERIFY_SSL=False
       - ZVM_HOST=192.168.50.60
       - ZVM_PORT=443
+      - SCRAPE_SPEED=30 #how often should the exporter scrape the Zerto API
       - CLIENT_ID=api-script
       - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j
       - LOGGING_LEVEL=INFO
