@@ -1,9 +1,18 @@
 global:
-  scrape_interval:     30s
-  evaluation_interval: 20s 
+  scrape_interval:     60s
+  evaluation_interval: 60s 
+  scrape_timeout: 60s
 
 scrape_configs:
   - job_name: 'ransomexporter'
     scrape_interval: 30s
+    scrape_timeout: 20s
     static_configs:
          - targets: ['zertoexporter:9999']
+
+  - job_name: 'encryption-stats'
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    static_configs:
+         - targets: ['zertoexporter:9999']
+    metrics_path: /statsmetrics
