@@ -11,7 +11,7 @@ volumes:
 services:
 
   zertoexporter:
-    image: recklessop/zertoexporter:latest
+    image: recklessop/zerto-exporter:latest
     command: python python-node-exporter.py
     ports:
       - "9999:9999"
