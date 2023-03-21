@@ -610,7 +610,8 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 37,
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -624,6 +625,6 @@
   "timezone": "",
   "title": "Encryption Analyzer Dashboard",
   "uid": "DqUCTVcVz",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
