@@ -58,7 +58,7 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=zertodata
+      - GF_SECURITY_ADMIN_PASSWORD=metricdata
       - GF_USERS_ALLOW_SIGN_UP=false
       - data-source-url=http://prometheus:9090
       - name=Prometheus
