@@ -16,3 +16,10 @@ scrape_configs:
     static_configs:
          - targets: ['zertoexporter:9999']
     metrics_path: /statsmetrics
+
+  - job_name: 'thread-stats'
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    static_configs:
+         - targets: ['zertoexporter:9999']
+    metrics_path: /threads
