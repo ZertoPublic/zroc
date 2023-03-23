@@ -38,12 +38,12 @@ Edit docker-compose.yml, and provide values for the following variables for the 
       - ZVM_HOST=192.168.40.60 # ZVM specific info
       - ZVM_PORT=443
       - SCRAPE_SPEED=20 #how often should the exporter scrape the Zerto API in seconds
-      - CLIENT_ID=api-script 3 # ZVM specific info
+      - CLIENT_ID=api-script # ZVM specific info
       - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j # ZVM specific info
       - LOGLEVEL=DEBUG
       - VCENTER_HOST=192.168.40.50 # vcenter specific info
       - VCENTER_USER=administrator@vsphere.local # vcenter specific info
-      - VCENTER_PASSWORD=password2 # vcenter specific info
+      - VCENTER_PASSWORD=password # vcenter specific info
     networks:
       - back-tier
     restart: always
@@ -143,6 +143,10 @@ http://<IP_Address_of_Docker_Host>:3000
 Login credentials are admin / metricdata
 
 There will be several dashboards provisioned out of the box that will help monitor most metrics. Custom graphs and custom dashboards can be added too.
+
+## Troubleshooting
+
+To make sure that the exporter is able to collect data you can browse to http://dockerip:9999 or :9998 if you have a second site and look in the logs directory for the exporter logs. You can also verify that the various metric files are being created.
 
 ## Eye Candy
 
