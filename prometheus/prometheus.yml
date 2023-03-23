@@ -23,3 +23,10 @@ scrape_configs:
     static_configs:
          - targets: ['zertoexporter:9999']
     metrics_path: /threads
+    
+  - job_name: 'vra-stats'
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    static_configs:
+         - targets: ['zertoexporter:9999']
+    metrics_path: /vrametrics
