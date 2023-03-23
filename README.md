@@ -14,8 +14,83 @@ The rest of the stack is a standard Prometheus container and a standard Grafana 
 
 git clone http://www.github.com/recklessop/zroc.git
 
+## Configuration
 
-Edit docker-compose.yml, change the ZVM address and API credentials, then save the docker-compose.yaml file.
+Edit docker-compose.yml, and provide values for the following variables for the zvmexporter container.
+
+- ZVM IP or hostname
+- ZVM client id (generate this in keycloak)
+- ZVM client secret (also generated in keycloak)
+- VCenter ip or hostname
+- VCenter username
+- VCenter password
+
+### Multi-ZVM Configuration (Optional)
+
+If you want to monitor more than one ZVM/vCenter you can add additional zvmexporter containers. 
+
+For each site you want to monitor you need to copy the following yaml lines
+
+```yaml
+  zertoexporter2: # edit this if you need more than 2
+    image: recklessop/zerto-exporter:latest
+    command: python python-node-exporter.py
+    ports:
+      - "9998:9999" # edit the port for each additional exporter, in this case it was changed to 9998
+    volumes:
+      - ./zvmexporter/:/usr/src/logs/
+    environment:
+      - VERIFY_SSL=False
+      - ZVM_HOST=192.168.40.60 # second ZVM specific info
+      - ZVM_PORT=443
+      - SCRAPE_SPEED=20 #how often should the exporter scrape the Zerto API
+      - CLIENT_ID=api-script 3 # second ZVM specific info
+      - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j # second ZVM specific info
+      - LOGLEVEL=DEBUG
+      - VCENTER_HOST=192.168.40.50 # second vcenter specific info
+      - VCENTER_USER=administrator@vsphere.local # second vcenter specific info
+      - VCENTER_PASSWORD=password2 # second vcenter specific info
+    networks:
+      - back-tier
+    restart: always
+```
+
+Next, modify the prometheus configuration and add additional scrape jobs for each new exporter. You will have 4 scrape jobs for each exporter.
+Notice the job names and target ports have been updated to reflect the 2nd exporter.
+
+```yaml
+  - job_name: 'ransomexporter2'
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    static_configs:
+         - targets: ['zertoexporter:9998']
+
+  - job_name: 'encryption-stats2'
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    static_configs:
+         - targets: ['zertoexporter:9998']
+    metrics_path: /statsmetrics
+
+  - job_name: 'thread-stats2'
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    static_configs:
+         - targets: ['zertoexporter:9998']
+    metrics_path: /threads
+
+  - job_name: 'vra-stats2'
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    static_configs:
+         - targets: ['zertoexporter:9998']
+    metrics_path: /vrametrics
+```
+
+The default dashboards provisioned with this stack will show stats for all sites in the graphs.
+
+If you want to create site specific dashboards, you can clone the existing dashboards, and then edit them to include filters for "siteName" labels.
+
 
 ## Running 
 
