@@ -31,7 +31,7 @@ services:
       - LOGLEVEL=DEBUG
       - VCENTER_HOST=192.168.50.50
       - VCENTER_USER=administrator@vsphere.local
-      - VCENTER_PASSWORD=Zertodata987!
+      - VCENTER_PASSWORD=password
     networks:
       - back-tier
     restart: always
@@ -57,7 +57,7 @@ services:
   #    - LOGLEVEL=DEBUG
   #    - VCENTER_HOST=192.168.50.20
   #    - VCENTER_USER=administrator@vsphere.local
-  #    - VCENTER_PASSWORD=Zertodata987!
+  #    - VCENTER_PASSWORD=password
   #  networks:
   #    - back-tier
   #  restart: always
