@@ -25,6 +25,31 @@ Edit docker-compose.yml, and provide values for the following variables for the 
 - VCenter username
 - VCenter password
 
+```yaml
+  zertoexporter: # edit this if you need more than 2
+    image: recklessop/zerto-exporter:latest
+    command: python python-node-exporter.py
+    ports:
+      - "9999:9999" # edit the port for each additional exporter, in this case it was changed to 9998
+    volumes:
+      - ./zvmexporter/:/usr/src/logs/
+    environment:
+      - VERIFY_SSL=False
+      - ZVM_HOST=192.168.40.60 # ZVM specific info
+      - ZVM_PORT=443
+      - SCRAPE_SPEED=20 #how often should the exporter scrape the Zerto API in seconds
+      - CLIENT_ID=api-script 3 # ZVM specific info
+      - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j # ZVM specific info
+      - LOGLEVEL=DEBUG
+      - VCENTER_HOST=192.168.40.50 # vcenter specific info
+      - VCENTER_USER=administrator@vsphere.local # vcenter specific info
+      - VCENTER_PASSWORD=password2 # vcenter specific info
+    networks:
+      - back-tier
+    restart: always
+```
+
+
 ### Multi-ZVM Configuration (Optional)
 
 If you want to monitor more than one ZVM/vCenter you can add additional zvmexporter containers. 
