@@ -4,29 +4,34 @@ global:
   scrape_timeout: 60s
 
 scrape_configs:
-  - job_name: 'zvmexporter'
+  - job_name: 'vm-stats'
     scrape_interval: 30s
     scrape_timeout: 20s
     static_configs:
-         - targets: ['zertoexporter:9999']
+         - targets: ['zvmexporter1:9999']
+         #- targets: ['zvmexporter2:9999'] # only needed if you have two ZVMs to monitor
 
   - job_name: 'encryption-stats'
     scrape_interval: 30s
     scrape_timeout: 20s
-    static_configs:
-         - targets: ['zertoexporter:9999']
     metrics_path: /statsmetrics
+    static_configs:
+         - targets: ['zvmexporter1:9999']
+         #- targets: ['zvmexporter2:9999'] # only needed if you have two ZVMs to monitor
+
 
   - job_name: 'thread-stats'
     scrape_interval: 30s
     scrape_timeout: 20s
-    static_configs:
-         - targets: ['zertoexporter:9999']
     metrics_path: /threads
-    
+    static_configs:
+         - targets: ['zvmexporter1:9999']
+         #- targets: ['zvmexporter2:9999'] # only needed if you have two ZVMs to monitor
+
   - job_name: 'vra-stats'
     scrape_interval: 30s
     scrape_timeout: 20s
-    static_configs:
-         - targets: ['zertoexporter:9999']
     metrics_path: /vrametrics
+    static_configs:
+         - targets: ['zvmexporter1:9999']
+         #- targets: ['zvmexporter2:9999'] # only needed if you have two ZVMs to monitor
