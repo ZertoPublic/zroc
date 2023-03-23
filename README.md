@@ -26,7 +26,7 @@ Edit docker-compose.yml, and provide values for the following variables for the 
 - VCenter password
 
 ```yaml
-  zertoexporter: # edit this if you need more than 2
+  zertoexporter:
     image: recklessop/zerto-exporter:latest
     command: python python-node-exporter.py
     ports:
