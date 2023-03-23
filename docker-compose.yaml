@@ -10,24 +10,57 @@ volumes:
 
 services:
 
+  # Exporter for ZVM/vCenter site 1
   zertoexporter:
+    container_name: zvmexporter1
+    hostname: zvmexporter1 # this hostname will need to be set in the prometheus.yaml file as well
     image: recklessop/zerto-exporter:latest
     command: python python-node-exporter.py
     ports:
       - "9999:9999"
     volumes:
-      - ./zvmexporter/:/usr/src/logs/
+      - ./zvmexporter/:/usr/src/app/logs/
     environment:
+      # Site 1 configuration settings
       - VERIFY_SSL=False
       - ZVM_HOST=192.168.50.60
       - ZVM_PORT=443
-      - SCRAPE_SPEED=30 #how often should the exporter scrape the Zerto API
+      - SCRAPE_SPEED=20 #how often should the exporter scrape the Zerto API
       - CLIENT_ID=api-script
       - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j
-      - LOGGING_LEVEL=INFO
+      - LOGLEVEL=DEBUG
+      - VCENTER_HOST=192.168.50.50
+      - VCENTER_USER=administrator@vsphere.local
+      - VCENTER_PASSWORD=Zertodata987!
     networks:
       - back-tier
     restart: always
+
+  # This is used for a second ZVM / vCenter (maybe your DR site?)
+  #zertoexporter2:
+  #  container_name: zvmexporter2
+  #  hostname: zvmexporter2
+  #  image: recklessop/zerto-exporter:latest
+  #  command: python python-node-exporter.py
+  #  ports:
+  #    - "9998:9999" # if you add a third or more exporters change the port number before the :
+  #  volumes:
+  #    - ./zvmexporter/:/usr/src/app/logs/
+  #  environment:
+  #    # Site 2 configuration settings
+  #    - VERIFY_SSL=False
+  #    - ZVM_HOST=192.168.50.30
+  #    - ZVM_PORT=443
+  #    - SCRAPE_SPEED=20 #how often should the exporter scrape the Zerto API
+  #    - CLIENT_ID=api-script
+  #    - CLIENT_SECRET=x2aokKGPyS1O6LCW2uNqm2tbko2PLUSn
+  #    - LOGLEVEL=DEBUG
+  #    - VCENTER_HOST=192.168.50.20
+  #    - VCENTER_USER=administrator@vsphere.local
+  #    - VCENTER_PASSWORD=Zertodata987!
+  #  networks:
+  #    - back-tier
+  #  restart: always
 
   prometheus:
     image: prom/prometheus:v2.40.6
@@ -58,7 +91,7 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=metricdata
+      - GF_SECURITY_ADMIN_PASSWORD=zertodata
       - GF_USERS_ALLOW_SIGN_UP=false
       - data-source-url=http://prometheus:9090
       - name=Prometheus
@@ -74,5 +107,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - WATCHTOWER_POLL_INTERVAL=3600 # 1 hour
+      - WATCHTOWER_POLL_INTERVAL=60 # 1 hour
     restart: always
