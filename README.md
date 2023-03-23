@@ -1,8 +1,8 @@
 # Zerto Resiliency Observation Console
 zROC for short, is a docker-compose based stack that allows you to observe Zerto API data in a visual format using Prometheus and Grafana.
 
-The custom part of this stack is the Prometheus exporter code which is developed seperately [here.](https://github.com/recklessop/Zerto_Exporter)
-The rest of the stack is a standard Promethues container and a standard Grafana container. The additional configuration files in this repo will help to configure both Prometheus and Grafana so that it can be used out of the box.
+The custom part of this stack is the Prometheus exporter code which is developed separately [here.](https://github.com/recklessop/Zerto_Exporter)
+The rest of the stack is a standard Prometheus container and a standard Grafana container. The additional configuration files in this repo will help to configure both Prometheus and Grafana so that it can be used out of the box.
 
 ## Requirements
 - Docker host (I like using Ubuntu with docker.io and docker-compose installed)
@@ -35,7 +35,7 @@ There will be several dashboards provisioned out of the box that will help monit
 Here are screenshots from the dashboards which ship with zROC.
 
 ### Main Zerto Metrics Dashboard
-Every NOC needs some eye candy right? This dashboard is great for a heads up display to see which VPGs and VMs may be falling behind in replication.
+Every NOC needs some eye candy right? This dashboard is great for a heads-up display to see which VPGs and VMs may be falling behind in replication.
 ![Zerto Metrics](/images/zerto-metrics.jpg)
 
 ### Protected VMs
