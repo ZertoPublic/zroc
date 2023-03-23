@@ -54,62 +54,76 @@ Edit docker-compose.yml, and provide values for the following variables for the 
 
 If you want to monitor more than one ZVM/vCenter you can add additional zvmexporter containers. 
 
-For each site you want to monitor you need to copy the following yaml lines
+For each site you want to monitor you need to have an exporter configured like the lines below. By default the docker-compose.yaml has two exporters for a production and DR site, but you can add more sites to achieve a single pain of glass for monitoring all the ZVM's that are reachable from your docker host.
 
-```yaml
-  zertoexporter2: # edit this if you need more than 2
+```yaml  
+  zertoexporter:
+    container_name: zvmexporter1
+    hostname: zvmexporter1 # this hostname will need to be set in the prometheus.yaml file as well
     image: recklessop/zerto-exporter:latest
     command: python python-node-exporter.py
     ports:
-      - "9998:9999" # edit the port for each additional exporter, in this case it was changed to 9998
+      - "9999:9999"
     volumes:
-      - ./zvmexporter/:/usr/src/logs/
+      - ./zvmexporter/:/usr/src/app/logs/
     environment:
+      # Site 1 configuration settings
       - VERIFY_SSL=False
-      - ZVM_HOST=192.168.40.60 # second ZVM specific info
+      - ZVM_HOST=192.168.50.60
       - ZVM_PORT=443
       - SCRAPE_SPEED=20 #how often should the exporter scrape the Zerto API
-      - CLIENT_ID=api-script 3 # second ZVM specific info
-      - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j # second ZVM specific info
+      - CLIENT_ID=api-script
+      - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j
       - LOGLEVEL=DEBUG
-      - VCENTER_HOST=192.168.40.50 # second vcenter specific info
-      - VCENTER_USER=administrator@vsphere.local # second vcenter specific info
-      - VCENTER_PASSWORD=password2 # second vcenter specific info
+      - VCENTER_HOST=192.168.50.50
+      - VCENTER_USER=administrator@vsphere.local
+      - VCENTER_PASSWORD=password
     networks:
       - back-tier
     restart: always
 ```
 
-Next, modify the prometheus configuration and add additional scrape jobs for each new exporter. You will have 4 scrape jobs for each exporter.
-Notice the job names and target ports have been updated to reflect the 2nd exporter.
+Next, modify the prometheus configuration and add additional targets for each scrape job.
+Notice the hostname is all that has been updated to reflect the 2nd exporter. (the hostname is whatever you set in the docker-compose.yaml file.
 
 ```yaml
-  - job_name: 'ransomexporter2'
-    scrape_interval: 30s
-    scrape_timeout: 20s
-    static_configs:
-         - targets: ['zertoexporter:9998']
+ global:
+  scrape_interval:     60s
+  evaluation_interval: 60s 
+  scrape_timeout: 60s
 
-  - job_name: 'encryption-stats2'
+scrape_configs:
+  - job_name: 'vm-stats'
     scrape_interval: 30s
     scrape_timeout: 20s
     static_configs:
-         - targets: ['zertoexporter:9998']
+         - targets: ['zvmexporter1:9999']
+         #- targets: ['zvmexporter2:9999'] # only needed if you have two ZVMs to monitor
+
+  - job_name: 'encryption-stats'
+    scrape_interval: 30s
+    scrape_timeout: 20s
     metrics_path: /statsmetrics
+    static_configs:
+         - targets: ['zvmexporter1:9999']
+         #- targets: ['zvmexporter2:9999'] # only needed if you have two ZVMs to monitor
 
-  - job_name: 'thread-stats2'
+
+  - job_name: 'thread-stats'
     scrape_interval: 30s
     scrape_timeout: 20s
-    static_configs:
-         - targets: ['zertoexporter:9998']
     metrics_path: /threads
+    static_configs:
+         - targets: ['zvmexporter1:9999']
+         #- targets: ['zvmexporter2:9999'] # only needed if you have two ZVMs to monitor
 
-  - job_name: 'vra-stats2'
+  - job_name: 'vra-stats'
     scrape_interval: 30s
     scrape_timeout: 20s
-    static_configs:
-         - targets: ['zertoexporter:9998']
     metrics_path: /vrametrics
+    static_configs:
+         - targets: ['zvmexporter1:9999']
+         #- targets: ['zvmexporter2:9999'] # only needed if you have two ZVMs to monitor
 ```
 
 The default dashboards provisioned with this stack will show stats for all sites in the graphs.
