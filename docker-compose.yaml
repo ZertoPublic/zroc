@@ -29,7 +29,7 @@ services:
       - CLIENT_ID=api-script
       - CLIENT_SECRET=js51tDM8oappYUGRJBhF7bcsedNoHA5j
       - LOGLEVEL=DEBUG
-      - VCENTER_HOST=192.168.50.50
+      - VCENTER_HOST=vcenter.local
       - VCENTER_USER=administrator@vsphere.local
       - VCENTER_PASSWORD=password
     networks:
