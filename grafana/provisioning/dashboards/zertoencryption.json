@@ -110,7 +110,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "builder",
-          "expr": "vm_PercentEncrypted",
+          "expr": "vm_PercentEncrypted{SiteName=\"$SiteName\"}",
           "interval": "",
           "legendFormat": "{{VmName}}",
           "range": true,
@@ -203,7 +203,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "builder",
-          "expr": "sum(vm_TotalDataInLBs)",
+          "expr": "sum(vm_TotalDataInLBs{SiteName=\"$SiteName\"})",
           "legendFormat": "Total Logical Blocks",
           "range": true,
           "refId": "A"
@@ -320,7 +320,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "builder",
-          "expr": "vm_EncryptedDataInLBs",
+          "expr": "vm_EncryptedDataInLBs{SiteName=\"$SiteName\"}",
           "interval": "",
           "legendFormat": "{{VmName}}",
           "range": true,
@@ -413,7 +413,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "builder",
-          "expr": "vm_UnencryptedDataInLBs",
+          "expr": "vm_UnencryptedDataInLBs{SiteName=\"$SiteName\"}",
           "interval": "",
           "legendFormat": "{{VmName}}",
           "range": true,
@@ -506,7 +506,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "builder",
-          "expr": "vm_IoOperationsCounter",
+          "expr": "vm_IoOperationsCounter{SiteName=\"$SiteName\"}",
           "interval": "",
           "legendFormat": "{{VmName}}",
           "range": true,
@@ -599,7 +599,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "builder",
-          "expr": "vm_throughput_in_mb",
+          "expr": "vm_throughput_in_mb{SiteName=\"$SiteName\"}",
           "legendFormat": "{{VmName}}",
           "range": true,
           "refId": "A"
@@ -615,16 +615,44 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "Sunrise Main",
+          "value": "Sunrise Main"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
+        "definition": "query_result(vm_actualrpo{})",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Site Name",
+        "multi": false,
+        "name": "SiteName",
+        "options": [],
+        "query": {
+          "query": "query_result(vm_actualrpo{})",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "/.*SiteName=\"([^\"]+)\".*/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Encryption Analyzer Dashboard",
   "uid": "DqUCTVcVz",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }
