@@ -14,7 +14,7 @@ services:
   zertoexporter:
     container_name: zvmexporter1
     hostname: zvmexporter1 # this hostname will need to be set in the prometheus.yaml file as well
-    image: recklessop/zerto-exporter:latest
+    image: recklessop/zerto-exporter:stable
     command: python python-node-exporter.py
     ports:
       - "9999:9999"
@@ -40,7 +40,7 @@ services:
   #zertoexporter2:
   #  container_name: zvmexporter2
   #  hostname: zvmexporter2
-  #  image: recklessop/zerto-exporter:latest
+  #  image: recklessop/zerto-exporter:stable
   #  command: python python-node-exporter.py
   #  ports:
   #    - "9998:9999" # if you add a third or more exporters change the port number before the :
