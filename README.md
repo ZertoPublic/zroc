@@ -140,7 +140,18 @@ docker-compose up -d
 
 http://<IP_Address_of_Docker_Host>:3000
 
-Login credentials are admin / metricdata
+Login credentials are admin / zertodata
+
+(you can change this by changing the grafana environment variable in the docker-compose.yaml file.
+
+```
+  grafana:
+    image: grafana/grafana
+...
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=zertodata
+...
+```
 
 There will be several dashboards provisioned out of the box that will help monitor most metrics. Custom graphs and custom dashboards can be added too.
 
