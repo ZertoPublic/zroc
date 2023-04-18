@@ -1,8 +1,15 @@
 # Zerto Resiliency Observation Console
-zROC for short, is a docker-compose based stack that allows you to observe Zerto API data in a visual format using Prometheus and Grafana.
+zROC for short, is a docker-compose based software stack that allows you to observe standard Zerto API data in a visual format using Prometheus and Grafana.
 
 The custom part of this stack is the Prometheus exporter code which is developed separately [here.](https://github.com/recklessop/Zerto_Exporter)
-The rest of the stack is a standard Prometheus container and a standard Grafana container. The additional configuration files in this repo will help to configure both Prometheus and Grafana so that it can be used out of the box.
+The rest of the stack is a standard Prometheus container and a standard Grafana container. The additional configuration files in this repo help to configure both Prometheus and Grafana to deliver customer value out of the box.
+
+While some dashboards are pre-build the project maintainers encourage you to build your own custom dashboards or copy and modify existing dashboards to what best suits your needs.
+
+# Legal Disclaimer
+This script is open-source and is not supported under any Zerto support program or service. The author and Zerto further disclaim all implied warranties including, without limitation, any implied warranties of merchantability or of fitness for a particular purpose.
+
+In no event shall Zerto, its authors or anyone else involved in the creation, production or delivery of the scripts be liable for any damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use of or the inability to use the sample scripts or documentation, even if the author or Zerto has been advised of the possibility of such damages. The entire risk arising out of the use or performance of the sample scripts and documentation remains with you.
 
 ## Requirements
 - Docker host (I like using Ubuntu with docker.io and docker-compose installed)
