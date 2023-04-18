@@ -43,7 +43,7 @@ Edit docker-compose.yml, and provide values for the following variables for the 
 
 ```yaml
   zertoexporter:
-    image: recklessop/zerto-exporter:latest
+    image: recklessop/zerto-exporter:stable
     command: python python-node-exporter.py
     ports:
       - "9999:9999" # edit the port for each additional exporter, in this case it was changed to 9998
@@ -76,7 +76,7 @@ For each site you want to monitor you need to have an exporter configured like t
   zertoexporter:
     container_name: zvmexporter1
     hostname: zvmexporter1 # this hostname will need to be set in the prometheus.yaml file as well
-    image: recklessop/zerto-exporter:latest
+    image: recklessop/zerto-exporter:stable
     command: python python-node-exporter.py
     ports:
       - "9999:9999"
