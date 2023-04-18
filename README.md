@@ -29,7 +29,7 @@ Edit docker-compose.yml, and provide values for the following variables for the 
 - ZVM client id (generate this in keycloak)
 - ZVM client secret (also generated in keycloak)
 - VCenter ip or hostname
-- VCenter username
+- VCenter username (Optional - Also this can be a read only user. As it is just used to pull VRA CPU/Memory stats from vCenter)
 - VCenter password
 
 ```yaml
