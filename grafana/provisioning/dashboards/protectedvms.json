@@ -38,6 +38,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -51,6 +52,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -100,6 +102,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -132,6 +135,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -145,6 +149,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -195,6 +200,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -219,22 +225,21 @@
   ],
   "refresh": "30s",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "Sunrise DR",
-          "value": "Sunrise DR"
+          "selected": false,
+          "text": "JP-Lab",
+          "value": "JP-Lab"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "PBFA97CFB590B2093"
         },
-        "definition": "query_result(vm_actualrpo{})",
+        "definition": "query_result(vm_iops{})",
         "hide": 0,
         "includeAll": false,
         "label": "Site Name",
@@ -242,8 +247,9 @@
         "name": "SiteName",
         "options": [],
         "query": {
-          "query": "query_result(vm_actualrpo{})",
-          "refId": "StandardVariableQuery"
+          "qryType": 3,
+          "query": "query_result(vm_iops{})",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "/.*SiteName=\"([^\"]+)\".*/",
@@ -257,6 +263,7 @@
     "from": "now-24h",
     "to": "now"
   },
+  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {
     "refresh_intervals": [
       "30s",
