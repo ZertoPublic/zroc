@@ -192,5 +192,5 @@ The goal of this dashboard is to help you understand the workload on each of you
 ![VRA Metrics](/images/vra-dashboard.jpg)
 
 ### Encryption Detection
-This feature is in private preview. If you would like to learn more contact your Zerto account team. With Zerto Encryption Detection enabled, Zerto looks at each write that is being protected to determine if it is encrypted data or unencrypted data. The goal is to help customers detect anomalies caused by ransomware attacks in near real time.
+With Zerto Encryption Detection enabled, Zerto looks at each write that is being protected to determine if it is encrypted data or unencrypted data. The goal is to help customers detect anomalies caused by ransomware attacks in near real time.
 ![Encryption Detection](/images/encryption-detection.jpg)
